@@ -8,7 +8,9 @@ import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 
 import java.util.List;
-
+/*
+- Generally it is better to create one "Dao" for each "Entity"
+ */
 @Dao
 public interface NoteDao {
 
@@ -21,9 +23,13 @@ public interface NoteDao {
     @Delete
     void delete(Note note);
 
-    @Query("Delete From note_table")
+    @Query("DELETE FROM note_table")
     void deleteAllNotes();
 
-    @Query("Select * from note_table order by priority desc")
+    /*
+    - Using LiveData
+    - when there is any changes in note_table, LiveData will automatically make changes in UI too.
+     */
+    @Query("SELECT * FROM note_table ORDER BY priority DESC")
     LiveData<List<Note>> getAllNotes();
 }
